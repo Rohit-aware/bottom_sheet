@@ -1,0 +1,17 @@
+# Exclude version control and CI
+.git/
+.gitignore
+.github/
+
+# Exclude local OS files
+.DS_Store
+
+# Exclude package manager locks
+bun.lock
+yarn.lock
+package-lock.json
+
+# Exclude development files
+tsconfig.json
+jest.config.js
+__tests__/
