@@ -8,7 +8,7 @@ export type GestureDecisionInput = {
   velocityY: number;
   translationY: number;
   currentTranslateY: number;
-  snapPointTranslateYs: number[]; // translateY for each snap point (ascending heights, meaning descending translateY)
+  snapPointTranslateYs: number[];
   currentSnapIndex: number;
   maxHeight: number;
 };
@@ -23,10 +23,6 @@ export type GestureThresholds = {
   lowerSnapCloseRatio: number;
 };
 
-/**
- * Pure function that decides what action to take (close or snap to a index) when a drag gesture ends.
- * Can run as a worklet on the UI thread.
- */
 export const resolveGestureEnd = (
   input: GestureDecisionInput,
   thresholds?: GestureThresholds,
@@ -49,7 +45,6 @@ export const resolveGestureEnd = (
   const topIndex = snapPointTranslateYs.length - 1;
   const currentSnapTranslateY = snapPointTranslateYs[currentSnapIndex];
   
-  // Dragged down is positive when sheet is below the current snap point
   const draggedDown = Math.max(currentTranslateY - currentSnapTranslateY, 0);
   const hasMultipleSnaps = topIndex > 0;
   const isAtTopSnap = currentSnapIndex === topIndex;
@@ -57,7 +52,6 @@ export const resolveGestureEnd = (
   const snap0TranslateY = snapPointTranslateYs[0];
   const projectedY = currentTranslateY + velocityY * activeThresholds.velocityProjectionFactor;
 
-  // Close decision
   const shouldCloseFromLower =
     velocityY > activeThresholds.closeVelocity ||
     draggedDown > maxHeight * activeThresholds.lowerSnapCloseRatio;
@@ -76,7 +70,6 @@ export const resolveGestureEnd = (
     return { action: 'close' };
   }
 
-  // Snap decision — find nearest snap point
   let nearestIndex = 0;
   let minDistance = Math.abs(currentTranslateY - snap0TranslateY);
 
@@ -88,7 +81,6 @@ export const resolveGestureEnd = (
     }
   }
 
-  // Velocity overrides
   if (hasMultipleSnaps && velocityY < activeThresholds.snapUpVelocity) {
     nearestIndex = topIndex;
   }

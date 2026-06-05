@@ -8,9 +8,6 @@ export interface BottomSheetHandleProps {
   style?: BottomSheetStyleOverrides;
 }
 
-/**
- * Drag handle component displayed at the top of the bottom sheet.
- */
 export const BottomSheetHandle = React.memo(
   ({ theme, style: styleOverrides }: BottomSheetHandleProps) => {
     const { colors, radius, spacing, sizing } = theme;

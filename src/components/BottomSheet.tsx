@@ -93,7 +93,7 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
       enableContentGesture,
     });
 
-    // Expose public API methods to parent ref
+    
     useImperativeHandle(
       ref,
       () => ({

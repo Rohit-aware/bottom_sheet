@@ -12,9 +12,6 @@ export interface BottomSheetBackdropProps {
   style?: BottomSheetStyleOverrides;
 }
 
-/**
- * Backdrop overlay component that fades in and handles dismissing on click.
- */
 export const BottomSheetBackdrop = React.memo(
   ({
     onPress,

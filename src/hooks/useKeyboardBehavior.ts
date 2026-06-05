@@ -3,10 +3,6 @@ import { Keyboard, KeyboardEvent, Platform } from 'react-native';
 import { Easing, useSharedValue, withTiming } from 'react-native-reanimated';
 import { useStableCallback } from './useStableCallback';
 
-/**
- * Custom hook to track and animate the keyboard offset height.
- * Currently active on iOS only, mirroring original SDK behavior.
- */
 export const useKeyboardBehavior = (visible: boolean) => {
   const keyboardOffset = useSharedValue(0);
 

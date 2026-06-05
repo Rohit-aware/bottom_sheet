@@ -7,9 +7,6 @@ export interface UseBottomSheetAnimationProps {
   keyboardOffset: { value: number };
 }
 
-/**
- * Hook managing the sheet's active Y translation value and returning the animated styles.
- */
 export const useBottomSheetAnimation = ({
   maxHeight,
   resolvedSnapPoints,

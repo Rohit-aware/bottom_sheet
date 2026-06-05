@@ -36,7 +36,7 @@ export const useBottomSheetReactions = ({
 }: UseBottomSheetReactionsProps) => {
   const { duration, openEasing, snapEasing } = resolveAnimationConfig(animationConfig);
 
-  // Handle dynamic sizing opening animation when content height gets measured
+  
   useAnimatedReaction(
     () => {
       if (!visible || !enableDynamicSizing || !isOpening.value || contentHeight.value === undefined) {
@@ -71,7 +71,7 @@ export const useBottomSheetReactions = ({
     ],
   );
 
-  // Dimension / Snap alignment reaction
+  
   useAnimatedReaction(
     () => {
       if (!visible || !isOpen.value || isOpening.value) return undefined;

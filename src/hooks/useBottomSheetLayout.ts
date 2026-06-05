@@ -16,10 +16,6 @@ export interface UseBottomSheetLayoutProps {
   visible: boolean;
 }
 
-/**
- * Hook managing bottom sheet measurements, safe area layout boundaries,
- * and snap point height calculations.
- */
 export const useBottomSheetLayout = ({
   snapPoints,
   enableDynamicSizing = false,

@@ -9,9 +9,6 @@ export interface BottomSheetThemeProviderProps {
   children: ReactNode;
 }
 
-/**
- * Theme provider that supplies style tokens to nested bottom sheets.
- */
 export const BottomSheetThemeProvider = ({
   theme,
   children,
@@ -23,9 +20,6 @@ export const BottomSheetThemeProvider = ({
   );
 };
 
-/**
- * Hook to retrieve the current BottomSheetTheme tokens from context.
- */
 export const useBottomSheetTheme = (): BottomSheetTheme => {
   return useContext(ThemeContext);
 };

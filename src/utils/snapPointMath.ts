@@ -1,10 +1,6 @@
 import { BOTTOM_SHEET_HANDLE_TOTAL_HEIGHT } from '../constants/defaults';
 import type { SnapPoint } from '../types/props';
 
-/**
- * Resolves a single snap point (number or percentage) to its pixel height.
- * Runs as a worklet.
- */
 export const resolveSnapPoint = (
   snapPoint: SnapPoint,
   maxHeight: number,
@@ -20,10 +16,6 @@ export const resolveSnapPoint = (
   return Math.min(maxHeight * percent, maxHeight);
 };
 
-/**
- * Resolves all snap points to pixel heights, applying dynamic sizing if enabled.
- * Runs as a worklet.
- */
 export const getBottomSheetSnapPoints = ({
   snapPoints,
   maxHeight,
@@ -41,16 +33,16 @@ export const getBottomSheetSnapPoints = ({
     return [maxHeight];
   }
 
-  // 1. Resolve all user snap points to pixel heights.
+  
   const resolved = snapPoints.map((sp) => resolveSnapPoint(sp, maxHeight));
 
-  // 2. If dynamic sizing is enabled and content has been measured, adjust the base (first) snap point.
+  
   if (enableDynamicSizing && contentHeight !== undefined && resolved.length > 0) {
     const measuredHeight = Math.max(0, contentHeight) + BOTTOM_SHEET_HANDLE_TOTAL_HEIGHT;
     resolved[0] = Math.min(measuredHeight, resolved[0]);
   }
 
-  // Ensure they are sorted in ascending order (smallest height first) and filter out duplicates
+  
   const sorted = resolved.sort((a, b) => a - b);
   const unique: number[] = [];
   for (let i = 0; i < sorted.length; i++) {
@@ -62,10 +54,6 @@ export const getBottomSheetSnapPoints = ({
   return unique.length > 0 ? unique : [maxHeight];
 };
 
-/**
- * Calculates the translateY value for a given snap index.
- * Runs as a worklet.
- */
 export const getBottomSheetSnapPointTranslateY = ({
   snapPoints,
   maxHeight,
@@ -84,10 +72,6 @@ export const getBottomSheetSnapPointTranslateY = ({
   return maxHeight - snapHeight;
 };
 
-/**
- * Returns the highest snap index.
- * Runs as a worklet.
- */
 export const getBottomSheetTopSnapIndex = (snapPoints: number[]): number => {
   'worklet';
   return Math.max(0, snapPoints.length - 1);

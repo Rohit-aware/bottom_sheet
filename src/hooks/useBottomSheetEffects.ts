@@ -34,7 +34,7 @@ export const useBottomSheetEffects = ({
   const hasCommittedVisibilityRef = useRef(false);
   const wasVisibleRef = useRef(false);
 
-  // Modal opening layout effect
+  
   useLayoutEffect(() => {
     const wasVisible = hasCommittedVisibilityRef.current ? wasVisibleRef.current : false;
     hasCommittedVisibilityRef.current = true;
@@ -68,7 +68,7 @@ export const useBottomSheetEffects = ({
     setRenderContent,
   ]);
 
-  // Hard visibility change / hidden cleanup
+  
   useEffect(() => {
     if (visible) return;
 

@@ -23,9 +23,6 @@ export interface UseBottomSheetControllerProps {
   animationConfig?: BottomSheetAnimationConfig;
 }
 
-/**
- * Controller hook managing the open, close, and snapping state machine of the bottom sheet.
- */
 export const useBottomSheetController = ({
   visible,
   onClose,

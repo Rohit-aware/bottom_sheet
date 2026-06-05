@@ -16,9 +16,6 @@ export interface BottomSheetContentProps {
   style?: BottomSheetStyleOverrides;
 }
 
-/**
- * Component that lazily renders sheet content and handles dynamic sizing measurements.
- */
 export const BottomSheetContent = React.memo(
   ({
     renderContent,

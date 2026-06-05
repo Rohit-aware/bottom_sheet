@@ -23,9 +23,6 @@ export interface UseBottomSheetGestureProps {
   enableContentGesture?: boolean;
 }
 
-/**
- * Hook to build and memoize the pan gesture.
- */
 export const useBottomSheetGesture = ({
   renderContent,
   maxHeight,

@@ -4,9 +4,6 @@ import { BottomSheetContext } from '../context/BottomSheetContext';
 import { isTestEnvironment } from '../utils/environment';
 import type { BottomSheetContextValue } from '../types/internal';
 
-/**
- * Hook to consume BottomSheetContext. Enables children to trigger sheet close or snapping.
- */
 export const useBottomSheet = (): BottomSheetContextValue => {
   const contextValue = useContext(BottomSheetContext);
 
@@ -16,7 +13,7 @@ export const useBottomSheet = (): BottomSheetContextValue => {
     );
   }
 
-  // Fallback for tests/storybook environment
+  
   return (
     contextValue || {
       close: () => {},
