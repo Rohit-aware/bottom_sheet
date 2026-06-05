@@ -72,7 +72,7 @@
   "author": "Rohit Aware",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Rohit-aware/design-system.git"
+    "url": "https://github.com/Rohit-aware/bottom_sheet.git"
   },
   "publishConfig": {
     "access": "public"
