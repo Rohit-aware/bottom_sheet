@@ -1,6 +1,5 @@
-import { useMemo, useCallback } from 'react';
-import { Gesture } from 'react-native-gesture-handler';
 import { useSharedValue } from 'react-native-reanimated';
+import { usePanGesture } from 'react-native-gesture-handler';
 import { scheduleOnRN } from 'react-native-worklets';
 import {
   resolveGestureEnd,
@@ -40,63 +39,73 @@ export const useBottomSheetGesture = ({
   const stableCloseFromGesture = useStableCallback(closeFromGesture);
   const stableSnapToIndex = useStableCallback(snapToIndex);
 
-  const createPanGesture = useCallback(
-    (enabled: boolean) => {
-      return Gesture.Pan()
-        .enabled(enabled)
-        .onBegin(() => {
-          panStartTranslateY.value = sheetTranslateY.value;
-        })
-        .onUpdate((event) => {
-          const nextTranslateY = panStartTranslateY.value + event.translationY;
-          sheetTranslateY.value = Math.min(Math.max(nextTranslateY, 0), maxHeight);
-        })
-        .onEnd((event) => {
-          const decision = resolveGestureEnd(
-            {
-              velocityY: event.velocityY,
-              translationY: event.translationY,
-              currentTranslateY: sheetTranslateY.value,
-              snapPointTranslateYs: snapPointTranslateYs.value,
-              currentSnapIndex: currentSnapIndex.value,
-              maxHeight,
-            },
-            gestureThresholds,
-          );
-
-          if (decision.action === 'close') {
-            if (enableDragToClose) {
-              scheduleOnRN(stableCloseFromGesture);
-            } else {
-              scheduleOnRN(stableSnapToIndex, 0);
-            }
-          } else {
-            scheduleOnRN(stableSnapToIndex, decision.index);
-          }
-        });
+  const handlePanGesture = usePanGesture({
+    enabled: renderContent,
+    onBegin: () => {
+      panStartTranslateY.value = sheetTranslateY.value;
     },
-    [
-      maxHeight,
-      enableDragToClose,
-      sheetTranslateY,
-      currentSnapIndex,
-      snapPointTranslateYs,
-      gestureThresholds,
-      panStartTranslateY,
-      stableCloseFromGesture,
-      stableSnapToIndex,
-    ],
-  );
+    onUpdate: (event) => {
+      const nextTranslateY = panStartTranslateY.value + event.translationY;
+      sheetTranslateY.value = Math.min(Math.max(nextTranslateY, 0), maxHeight);
+    },
+    onDeactivate: (event) => {
+      const decision = resolveGestureEnd(
+        {
+          velocityY: event.velocityY,
+          translationY: event.translationY,
+          currentTranslateY: sheetTranslateY.value,
+          snapPointTranslateYs: snapPointTranslateYs.value,
+          currentSnapIndex: currentSnapIndex.value,
+          maxHeight,
+        },
+        gestureThresholds,
+      );
 
-  const handlePanGesture = useMemo(
-    () => createPanGesture(renderContent),
-    [renderContent, createPanGesture],
-  );
+      if (decision.action === 'close') {
+        if (enableDragToClose) {
+          scheduleOnRN(stableCloseFromGesture);
+        } else {
+          scheduleOnRN(stableSnapToIndex, 0);
+        }
+      } else {
+        scheduleOnRN(stableSnapToIndex, decision.index);
+      }
+    },
+  });
 
-  const contentPanGesture = useMemo(
-    () => createPanGesture(renderContent && enableContentGesture),
-    [renderContent, enableContentGesture, createPanGesture],
-  );
+  const contentPanGesture = usePanGesture({
+    enabled: renderContent && enableContentGesture,
+    onBegin: () => {
+      panStartTranslateY.value = sheetTranslateY.value;
+    },
+    onUpdate: (event) => {
+      const nextTranslateY = panStartTranslateY.value + event.translationY;
+      sheetTranslateY.value = Math.min(Math.max(nextTranslateY, 0), maxHeight);
+    },
+    onDeactivate: (event) => {
+      const decision = resolveGestureEnd(
+        {
+          velocityY: event.velocityY,
+          translationY: event.translationY,
+          currentTranslateY: sheetTranslateY.value,
+          snapPointTranslateYs: snapPointTranslateYs.value,
+          currentSnapIndex: currentSnapIndex.value,
+          maxHeight,
+        },
+        gestureThresholds,
+      );
+
+      if (decision.action === 'close') {
+        if (enableDragToClose) {
+          scheduleOnRN(stableCloseFromGesture);
+        } else {
+          scheduleOnRN(stableSnapToIndex, 0);
+        }
+      } else {
+        scheduleOnRN(stableSnapToIndex, decision.index);
+      }
+    },
+  });
 
   return {
     handlePanGesture,

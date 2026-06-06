@@ -15,8 +15,8 @@ export interface BottomSheetViewProps {
   layout: UseBottomSheetLayoutResult;
   animation: UseBottomSheetAnimationResult;
   controller: UseBottomSheetControllerResult;
-  handlePanGesture: any;
-  contentPanGesture: any;
+  handlePanGesture: PanGesture;
+  contentPanGesture: PanGesture;
   style?: BottomSheetStyleOverrides;
   renderHandle?: (props: { theme: BottomSheetTheme }) => ReactNode;
   enableDynamicSizing?: boolean;

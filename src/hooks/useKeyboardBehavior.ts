@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Keyboard, KeyboardEvent, Platform } from 'react-native';
+import { Keyboard, KeyboardEvent, Platform, EmitterSubscription } from 'react-native';
 import { Easing, useSharedValue, withTiming } from 'react-native-reanimated';
 import { useStableCallback } from './useStableCallback';
 
@@ -27,7 +27,7 @@ export const useKeyboardBehavior = (visible: boolean) => {
       return;
     }
 
-    const listeners: any[] = [];
+    const listeners: EmitterSubscription[] = [];
 
     const showEvent = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
     const hideEvent = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
