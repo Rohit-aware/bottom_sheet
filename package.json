@@ -1,6 +1,6 @@
 {
   "name": "@rn-lab/bottom-sheet",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A production-ready, framework-agnostic bottom sheet component for React Native with snap points, imperative API, and render props.",
   "main": "lib/module/index.js",
   "module": "lib/module/index.js",
